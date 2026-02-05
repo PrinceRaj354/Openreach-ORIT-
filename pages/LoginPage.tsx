@@ -15,7 +15,7 @@ const LoginPage: React.FC = () => {
     e.preventDefault();
     const success = login(username, role);
     if (success) {
-      navigate(role === UserRole.ORIT_OPS ? '/dashboard' : '/jobs');
+      navigate(role === UserRole.ORIT_OPS ? '/dashboard' : '/field-jobs');
     } else {
       setError('Invalid credentials for selected role.');
     }

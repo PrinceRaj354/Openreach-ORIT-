@@ -330,11 +330,10 @@ const FieldAgentJobs: React.FC = () => {
                         className="w-full p-2 border border-gray-300 rounded-lg text-sm"
                       >
                         <option value="">Select category...</option>
-                        <option value="Fibre Blockage">Fibre Blockage</option>
-                        <option value="Power Outage">Power Outage</option>
-                        <option value="No Access">No Access</option>
-                        <option value="H&S Issue">H&S Issue</option>
-                        <option value="Equipment Fault">Equipment Fault</option>
+                        <option value="Fibre issue">Fibre issue</option>
+                        <option value="Access denied">Access denied</option>
+                        <option value="Hardware missing">Hardware missing</option>
+                        <option value="Signal issue">Signal issue</option>
                         <option value="Other">Other</option>
                       </select>
                     </div>

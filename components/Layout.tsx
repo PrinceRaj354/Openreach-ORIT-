@@ -3,7 +3,7 @@ import React, { useState, useMemo } from 'react';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useApp } from '../AppContext';
 import { UserRole } from '../types';
-import { DashboardIcon, JobsIcon, MapIcon, AnalyticsIcon, LogoutIcon, InventoryIcon, NotificationIcon } from './Icons';
+import { DashboardIcon, JobsIcon, MapIcon, AnalyticsIcon, LogoutIcon, InventoryIcon, NotificationIcon, SupportIcon } from './Icons';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -15,6 +15,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const location = useLocation();
   const [collapsed, setCollapsed] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
+  const [hasVibrated, setHasVibrated] = useState(false);
 
   if (!user) return <>{children}</>;
 
@@ -26,11 +27,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const navItems = [
     ...(user.role === UserRole.ORIT_OPS ? [
       { to: '/dashboard', label: 'Dashboard', icon: <DashboardIcon /> },
-      { to: '/jobs', label: 'Job Operations', icon: <JobsIcon /> },
-      { to: '/analytics', label: 'Analytics', icon: <AnalyticsIcon /> },
+      { to: '/jobs', label: 'Orders', icon: <JobsIcon /> },
       { to: '/inventory', label: 'Inventory', icon: <InventoryIcon /> },
     ] : [
       { to: '/field-jobs', label: 'My Jobs', icon: <JobsIcon /> },
+      { to: '/support', label: 'Support', icon: <SupportIcon /> },
     ]),
     { to: '/map', label: 'Asset Map', icon: <MapIcon /> },
   ];
@@ -44,24 +45,34 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     return roleNotifications.filter(n => !n.isRead).length;
   }, [roleNotifications]);
 
+  // Vibrate on new notifications
+  React.useEffect(() => {
+    if (unreadCount > 0 && !hasVibrated) {
+      if (navigator.vibrate) {
+        navigator.vibrate([200, 100, 200]);
+      }
+      setHasVibrated(true);
+    }
+  }, [unreadCount, hasVibrated]);
+
   return (
     <div className="flex h-screen bg-gray-100 overflow-hidden text-gray-800">
       {/* Sidebar */}
-      <aside className={`bg-[#550065] text-white transition-all duration-300 flex flex-col ${collapsed ? 'w-20' : 'w-64'}`}>
-        <div className="p-6 flex items-center gap-3 border-b border-purple-800">
-          <div className="bg-white rounded p-1">
-             <div className="w-6 h-6 bg-[#550065] rounded-sm"></div>
+      <aside className={`bg-white text-gray-800 transition-all duration-200 flex flex-col shadow-xl border-r border-gray-200 ${collapsed ? 'w-20' : 'w-64'}`}>
+        <div className="p-6 flex items-center gap-3 border-b border-gray-200">
+          <div className="bg-gradient-to-br from-[#550065] to-[#7a0085] rounded-lg p-1.5 shadow-md">
+             <div className="w-6 h-6 bg-white rounded"></div>
           </div>
-          {!collapsed && <span className="font-bold text-xl tracking-tight">Openreach <span className="text-pink-400">ORIT</span></span>}
+          {!collapsed && <span className="font-bold text-xl tracking-tight text-gray-800">Openreach <span className="text-[#550065]">ORIT</span></span>}
         </div>
 
-        <nav className="flex-1 mt-6 px-4 space-y-2">
+        <nav className="flex-1 mt-6 px-3 space-y-1.5">
           {navItems.map(item => (
             <NavLink
               key={item.to}
               to={item.to}
               className={({ isActive }) => 
-                `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive ? 'bg-white/10 text-white font-semibold' : 'text-purple-100 hover:bg-white/5'}`
+                `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-150 ${isActive ? 'bg-purple-500 text-white font-semibold shadow-lg' : 'text-gray-900 hover:bg-purple-500 hover:text-white hover:translate-x-1'}`
               }
             >
               {item.icon}
@@ -70,21 +81,21 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           ))}
         </nav>
 
-        <div className="p-4 border-t border-purple-800">
-          <div className={`flex items-center gap-3 px-4 py-3 text-purple-200 text-sm ${collapsed ? 'justify-center' : ''}`}>
-             <div className="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center font-bold">
+        <div className="p-4 border-t border-gray-200">
+          <div className={`flex items-center gap-3 px-4 py-3 text-gray-600 text-sm ${collapsed ? 'justify-center' : ''}`}>
+             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-400 to-indigo-600 flex items-center justify-center font-bold text-white shadow-md">
                {user.username.charAt(0).toUpperCase()}
              </div>
              {!collapsed && (
                <div className="flex flex-col">
-                 <span className="font-medium text-white">{user.username}</span>
-                 <span className="text-xs opacity-75">{user.role.replace('_', ' ')}</span>
+                 <span className="font-semibold text-gray-800">{user.username}</span>
+                 <span className="text-xs text-gray-500">{user.role.replace('_', ' ')}</span>
                </div>
              )}
           </div>
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-purple-100 hover:bg-red-500/20 hover:text-red-200 transition-colors mt-2"
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-red-50 hover:text-red-600 transition-all duration-150 mt-2"
           >
             <LogoutIcon />
             {!collapsed && <span>Logout</span>}
@@ -93,7 +104,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
         <button 
           onClick={() => setCollapsed(!collapsed)}
-          className="p-2 text-purple-300 hover:text-white flex justify-center border-t border-purple-800"
+          className="p-3 text-gray-500 hover:text-[#550065] hover:bg-gray-50 flex justify-center border-t border-gray-200 transition-all duration-150"
         >
           {collapsed ? '→' : '← Collapse'}
         </button>
@@ -101,19 +112,19 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
       {/* Main Content */}
       <main className="flex-1 overflow-y-auto relative">
-        <header className="sticky top-0 z-40 bg-white border-b border-gray-200 px-8 py-4 flex justify-between items-center shadow-sm">
-          <h1 className="text-lg font-bold text-[#002D72]">ORIT Operational Slice</h1>
+        <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b border-gray-200 px-8 py-4 flex justify-between items-center shadow-md">
+          <h1 className="text-lg font-bold text-[#002D72] tracking-tight">ORIT Operational Slice</h1>
           
           <div className="flex items-center gap-6">
             {/* Notification Bell */}
             <div className="relative">
               <button 
-                onClick={() => setShowNotifications(!showNotifications)}
-                className="p-2 text-gray-500 hover:text-[#550065] transition-colors relative"
+                onClick={() => { setShowNotifications(!showNotifications); setHasVibrated(true); }}
+                className={`p-2.5 text-gray-500 hover:text-[#550065] hover:bg-purple-50 rounded-xl transition-all duration-150 relative ${unreadCount > 0 && !showNotifications ? 'animate-bounce' : ''}`}
               >
                 <NotificationIcon />
                 {unreadCount > 0 && (
-                  <span className="absolute top-1 right-1 w-4 h-4 bg-pink-500 text-white text-[10px] flex items-center justify-center rounded-full border border-white">
+                  <span className="absolute top-1 right-1 w-4 h-4 bg-gradient-to-br from-pink-500 to-pink-600 text-white text-[10px] flex items-center justify-center rounded-full border-2 border-white shadow-md">
                     {unreadCount}
                   </span>
                 )}
@@ -123,12 +134,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 <>
                   <div 
                     className="fixed inset-0 z-10" 
-                    onClick={() => setShowNotifications(false)}
+                    onClick={() => { setShowNotifications(false); setHasVibrated(true); }}
                   />
-                  <div className="absolute right-0 mt-3 w-80 bg-white rounded-xl shadow-2xl border border-gray-100 z-50 overflow-hidden">
-                    <div className="p-4 bg-gray-50 border-b border-gray-100 flex justify-between items-center">
+                  <div className="absolute right-0 mt-3 w-80 bg-white rounded-2xl shadow-2xl border border-gray-200 z-50 overflow-hidden">
+                    <div className="p-4 bg-gradient-to-r from-purple-50 to-blue-50 border-b border-gray-200 flex justify-between items-center">
                       <span className="font-bold text-[#002D72]">System Alerts</span>
-                      <span className="text-[10px] text-gray-400 uppercase font-bold">{unreadCount} Unread</span>
+                      <span className="text-[10px] text-gray-500 uppercase font-bold">{unreadCount} Unread</span>
                     </div>
                     <div className="max-h-[400px] overflow-y-auto">
                       {roleNotifications.length === 0 ? (
@@ -137,11 +148,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                         roleNotifications.map(notif => (
                           <div 
                             key={notif.id}
-                            className={`p-4 border-b border-gray-50 hover:bg-gray-50 cursor-pointer transition-colors ${!notif.isRead ? 'bg-purple-50/30' : ''}`}
+                            className={`p-4 border-b border-gray-100 hover:bg-purple-50/50 cursor-pointer transition-all duration-150 ${!notif.isRead ? 'bg-purple-50/50 border-l-4 border-l-purple-500' : ''}`}
                             onClick={() => {
                               markNotificationRead(notif.id);
                               setShowNotifications(false);
-                              const targetPath = user.role === UserRole.ORIT_OPS ? '/dashboard' : '/field-jobs';
+                              const targetPath = user.role === UserRole.ORIT_OPS ? '/jobs' : '/field-jobs';
                               navigate(targetPath, { state: { highlightJobId: notif.jobId } });
                             }}
                           >
@@ -160,13 +171,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               )}
             </div>
 
-            <div className="flex items-center gap-4 text-sm text-gray-500">
-               <div className="flex items-center gap-1">
-                 <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                 System Status: Online
+            <div className="flex items-center gap-4 text-sm text-gray-600">
+               <div className="flex items-center gap-2 bg-green-50 px-3 py-1.5 rounded-full">
+                 <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-sm"></span>
+                 <span className="text-xs font-medium">System Online</span>
                </div>
                <div className="h-4 w-px bg-gray-300"></div>
-               <span>Region: <span className="font-semibold text-gray-800">{user.region}</span></span>
+               <span className="text-xs">Region: <span className="font-semibold text-gray-800">{user.region}</span></span>
             </div>
           </div>
         </header>

@@ -29,14 +29,15 @@ const MapPage: React.FC = () => {
 
     // Filter jobs by region if agent
     const visibleJobs = user?.role === UserRole.FIELD_AGENT 
-      ? jobs.filter(j => j.region === user.region) 
+      ? jobs.filter(j => j.assignedAgentId && j.region === user.region)
       : jobs;
 
     visibleJobs.forEach(job => {
-      const color = job.status === JobStatus.JOB_COMPLETED || job.status === JobStatus.BACKEND_NOTIFIED ? '#008A00' :
-                    job.status === JobStatus.JOB_IN_PROGRESS ? '#550065' :
+      const color = job.status === JobStatus.JOB_COMPLETED || job.status === JobStatus.BACKEND_NOTIFIED ? '#10B981' :
+                    job.status === JobStatus.JOB_IN_PROGRESS ? '#F59E0B' :
+                    job.status === JobStatus.ENGINEER_ASSIGNED ? '#3B82F6' :
                     job.status === JobStatus.SITE_CHECK_PENDING ? '#6B7280' :
-                    job.status === JobStatus.WAITING_FOR_PROCUREMENT ? '#F59E0B' : '#DC2626';
+                    job.status === JobStatus.WAITING_FOR_PROCUREMENT ? '#EF4444' : '#DC2626';
 
       const marker = L.circleMarker(job.coordinates, {
         radius: 8,
@@ -70,27 +71,46 @@ const MapPage: React.FC = () => {
       
       {/* Legend Overlay */}
       <div className="absolute bottom-6 right-6 z-[1000] bg-white p-4 rounded-xl shadow-xl border border-gray-100 space-y-2">
-        <h4 className="text-xs font-bold text-gray-400 uppercase mb-2 tracking-wider">Asset Legend</h4>
-        <div className="flex items-center gap-3 text-xs text-gray-800 font-medium">
-          <span className="w-3 h-3 rounded-full bg-green-600"></span>
-          <span>Service Active</span>
-        </div>
-        <div className="flex items-center gap-3 text-xs text-gray-800 font-medium">
-          <span className="w-3 h-3 rounded-full bg-[#550065]"></span>
-          <span>In Progress</span>
-        </div>
-        <div className="flex items-center gap-3 text-xs text-gray-800 font-medium">
-          <span className="w-3 h-3 rounded-full bg-amber-500"></span>
-          <span>Awaiting Stock</span>
-        </div>
-        <div className="flex items-center gap-3 text-xs text-gray-800 font-medium">
-          <span className="w-3 h-3 rounded-full bg-gray-500"></span>
-          <span>Pre-Survey</span>
-        </div>
-        <div className="flex items-center gap-3 text-xs text-gray-800 font-medium">
-          <span className="w-3 h-3 rounded-full bg-red-600"></span>
-          <span>Survey Blocked</span>
-        </div>
+        <h4 className="text-xs font-bold text-gray-400 uppercase mb-2 tracking-wider">{user?.role === UserRole.FIELD_AGENT ? 'My Jobs' : 'Asset Legend'}</h4>
+        {user?.role === UserRole.FIELD_AGENT ? (
+          <>
+            <div className="flex items-center gap-3 text-xs text-gray-800 font-medium">
+              <span className="w-3 h-3 rounded-full bg-green-500"></span>
+              <span>Completed</span>
+            </div>
+            <div className="flex items-center gap-3 text-xs text-gray-800 font-medium">
+              <span className="w-3 h-3 rounded-full bg-amber-500"></span>
+              <span>In Progress</span>
+            </div>
+            <div className="flex items-center gap-3 text-xs text-gray-800 font-medium">
+              <span className="w-3 h-3 rounded-full bg-blue-500"></span>
+              <span>Assigned</span>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="flex items-center gap-3 text-xs text-gray-800 font-medium">
+              <span className="w-3 h-3 rounded-full bg-green-600"></span>
+              <span>Service Active</span>
+            </div>
+            <div className="flex items-center gap-3 text-xs text-gray-800 font-medium">
+              <span className="w-3 h-3 rounded-full bg-[#550065]"></span>
+              <span>In Progress</span>
+            </div>
+            <div className="flex items-center gap-3 text-xs text-gray-800 font-medium">
+              <span className="w-3 h-3 rounded-full bg-amber-500"></span>
+              <span>Awaiting Stock</span>
+            </div>
+            <div className="flex items-center gap-3 text-xs text-gray-800 font-medium">
+              <span className="w-3 h-3 rounded-full bg-gray-500"></span>
+              <span>Pre-Survey</span>
+            </div>
+            <div className="flex items-center gap-3 text-xs text-gray-800 font-medium">
+              <span className="w-3 h-3 rounded-full bg-red-600"></span>
+              <span>Survey Blocked</span>
+            </div>
+          </>
+        )}
       </div>
 
       {/* Region Status Overlay */}

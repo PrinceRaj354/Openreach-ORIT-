@@ -9,9 +9,9 @@ interface Step {
 }
 
 const ORIT_STEPS: Step[] = [
-  { id: 'precheck', label: 'Inventory Audit', statuses: [JobStatus.ORDER_RECEIVED] },
-  { id: 'site', label: 'Site Feasibility', statuses: [JobStatus.SITE_CHECK_PENDING, JobStatus.SITE_CHECK_FAILED] },
-  { id: 'inventory', label: 'Local Allocation', statuses: [JobStatus.INVENTORY_AVAILABLE, JobStatus.INVENTORY_MISSING, JobStatus.WAITING_FOR_PROCUREMENT] },
+  { id: 'precheck', label: 'Inventory Audit', statuses: [JobStatus.ORDER_RECEIVED, JobStatus.INVENTORY_CHECK_PENDING, JobStatus.REWORK_INITIATED] },
+  { id: 'site', label: 'Site Feasibility', statuses: [JobStatus.SITE_CHECK_PENDING, JobStatus.SITE_CHECK_FAILED, JobStatus.NODE_CAPACITY_PENDING] },
+  { id: 'inventory', label: 'Local Allocation', statuses: [JobStatus.INVENTORY_ALLOCATION_PENDING, JobStatus.INVENTORY_MISSING, JobStatus.WAITING_FOR_PROCUREMENT] },
   { id: 'dispatch', label: 'Dispatch', statuses: [JobStatus.ENGINEER_ASSIGNED] },
   { id: 'execution', label: 'Field Install', statuses: [JobStatus.JOB_IN_PROGRESS, JobStatus.REWORK_REQUIRED] },
   { id: 'completion', label: 'Active', statuses: [JobStatus.JOB_COMPLETED, JobStatus.BACKEND_NOTIFIED] },

@@ -11,6 +11,7 @@ import MapPage from './pages/MapPage';
 import InventoryPage from './pages/InventoryPage';
 
 import JobOperations from './pages/JobOperations';
+import SupportPage from './pages/SupportPage';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user } = useApp();
@@ -57,6 +58,12 @@ const AppContent: React.FC = () => {
         <Route path="/map" element={
           <ProtectedRoute>
             <MapPage />
+          </ProtectedRoute>
+        } />
+
+        <Route path="/support" element={
+          <ProtectedRoute>
+            <SupportPage />
           </ProtectedRoute>
         } />
 
