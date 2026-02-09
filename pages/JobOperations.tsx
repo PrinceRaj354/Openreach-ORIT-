@@ -137,26 +137,26 @@ const JobOperations: React.FC = () => {
     <div className="space-y-8">
       {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg border border-gray-100 transition-all duration-200 hover:-translate-y-1">
+        <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg border-2 border-[#0a9c82] transition-all duration-200 hover:-translate-y-1">
           <div className="text-gray-500 text-xs font-bold uppercase tracking-wider mb-2">New Order Intakes</div>
-          <div className="text-4xl font-black text-blue-600">{getCount(JobStatus.ORDER_RECEIVED)}</div>
+          <div className="text-4xl font-black text-[#0a9c82]">{getCount(JobStatus.ORDER_RECEIVED)}</div>
         </div>
-        <div className="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg border border-gray-100 transition-all duration-200 hover:-translate-y-1">
+        <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg border-2 border-[#0a9c82] transition-all duration-200 hover:-translate-y-1">
           <div className="text-gray-500 text-xs font-bold uppercase tracking-wider mb-2">Pending Checks</div>
-          <div className="text-4xl font-black text-[#550065]">{getCount(JobStatus.INVENTORY_CHECK_PENDING) + getCount(JobStatus.SITE_CHECK_PENDING) + getCount(JobStatus.NODE_CAPACITY_PENDING)}</div>
+          <div className="text-4xl font-black text-[#4ac59d]">{getCount(JobStatus.INVENTORY_CHECK_PENDING) + getCount(JobStatus.SITE_CHECK_PENDING) + getCount(JobStatus.NODE_CAPACITY_PENDING)}</div>
         </div>
-        <div className="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg border border-gray-100 transition-all duration-200 hover:-translate-y-1">
+        <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg border-2 border-[#0a9c82] transition-all duration-200 hover:-translate-y-1">
           <div className="text-gray-500 text-xs font-bold uppercase tracking-wider mb-2">Rework Orders</div>
           <div className="text-4xl font-black text-orange-600">{reworkCount}</div>
         </div>
-        <div className="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg border border-gray-100 transition-all duration-200 hover:-translate-y-1">
+        <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg border-2 border-[#0a9c82] transition-all duration-200 hover:-translate-y-1">
           <div className="text-gray-500 text-xs font-bold uppercase tracking-wider mb-2">Complete / Ready</div>
           <div className="text-4xl font-black text-green-600">{getCount(JobStatus.JOB_COMPLETED) + getCount(JobStatus.BACKEND_NOTIFIED)}</div>
         </div>
       </div>
 
       {/* Actionable Workflow Table */}
-      <div className="bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden">
+      <div className="bg-white rounded-xl shadow-md border-2 border-[#0a9c82] overflow-hidden">
         <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-gradient-to-r from-gray-50 to-white">
           <h2 className="text-lg font-bold text-gray-800">Operational Queue</h2>
           <div className="flex gap-2 text-xs text-gray-500 bg-white px-3 py-1.5 rounded-lg border border-gray-200 shadow-sm">
@@ -179,10 +179,10 @@ const JobOperations: React.FC = () => {
                 return (
                 <tr 
                   key={job.id} 
-                  className={`hover:bg-purple-50/50 transition-all duration-150 cursor-pointer group ${highlightedId === job.id ? 'bg-purple-100 ring-2 ring-purple-500 z-10' : ''} ${isUnread ? 'bg-blue-50/30' : ''} ${job.parentOrderId ? 'bg-orange-50/20' : ''}`}
+                  className={`hover:bg-purple-50/50 transition-all duration-150 cursor-pointer group ${highlightedId === job.id ? 'bg-teal-100 ring-2 ring-[#0a9c82] z-10' : ''} ${isUnread ? 'bg-blue-50/30' : ''} ${job.parentOrderId ? 'bg-orange-50/20' : ''}`}
                   onClick={() => { setSelectedJobId(job.id); setReadOrders(prev => new Set(prev).add(job.id)); }}
                 >
-                  <td className="px-6 py-4 font-mono font-medium text-[#550065] group-hover:underline">
+                  <td className="px-6 py-4 font-mono font-medium text-[#0a9c82] group-hover:underline">
                     <div className="flex items-center gap-2">
                       {isUnread && <span className="inline-block w-2 h-2 bg-blue-500 rounded-full"></span>}
                       {job.parentOrderId && (
@@ -204,7 +204,7 @@ const JobOperations: React.FC = () => {
                     {job.status === JobStatus.ORDER_RECEIVED && (
                       <button 
                         onClick={(e) => { e.stopPropagation(); handlePreProcessAudit(job.id); }}
-                        className="bg-blue-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-blue-700 shadow-md hover:shadow-lg transition-all duration-150"
+                        className="bg-gradient-to-r from-[#0a9c82] to-[#4ac59d] text-white px-4 py-2 rounded-xl text-xs font-bold hover:shadow-lg transition-all duration-150"
                       >
                         Check Inventory Availability
                       </button>
@@ -212,7 +212,7 @@ const JobOperations: React.FC = () => {
                     {job.status === JobStatus.INVENTORY_CHECK_PENDING && (
                       <button 
                         onClick={(e) => { e.stopPropagation(); setShowInventoryModal(job.id); }}
-                        className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-indigo-700 shadow-md hover:shadow-lg transition-all duration-150"
+                        className="bg-gradient-to-r from-[#0a9c82] to-[#4ac59d] text-white px-4 py-2 rounded-xl text-xs font-bold hover:shadow-lg transition-all duration-150"
                       >
                         Verify Inventory Status
                       </button>
@@ -220,7 +220,7 @@ const JobOperations: React.FC = () => {
                     {job.status === JobStatus.SITE_CHECK_PENDING && (
                       <button 
                         onClick={(e) => { e.stopPropagation(); setShowSiteCheckModal(job.id); }}
-                        className="bg-[#550065] text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-[#3a0045] shadow-md hover:shadow-lg transition-all duration-150"
+                        className="bg-gradient-to-r from-[#0a9c82] to-[#4ac59d] text-white px-4 py-2 rounded-xl text-xs font-bold hover:shadow-lg transition-all duration-150"
                       >
                         Run Site Serviceability
                       </button>
@@ -228,7 +228,7 @@ const JobOperations: React.FC = () => {
                     {job.status === JobStatus.NODE_CAPACITY_PENDING && (
                       <button 
                         onClick={(e) => { e.stopPropagation(); handleNodeCapacityCheck(job.id); }}
-                        className="bg-teal-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-teal-700 shadow-md hover:shadow-lg transition-all duration-150"
+                        className="bg-gradient-to-r from-[#0a9c82] to-[#4ac59d] text-white px-4 py-2 rounded-xl text-xs font-bold hover:shadow-lg transition-all duration-150"
                       >
                         Verify Node Capacity
                       </button>
@@ -236,7 +236,7 @@ const JobOperations: React.FC = () => {
                     {job.status === JobStatus.INVENTORY_ALLOCATION_PENDING && (
                       <button 
                         onClick={(e) => { e.stopPropagation(); setShowInventoryModal(job.id); }}
-                        className="bg-[#002D72] text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-[#001d4a] shadow-md hover:shadow-lg transition-all duration-150"
+                        className="bg-gradient-to-r from-[#0a9c82] to-[#4ac59d] text-white px-4 py-2 rounded-xl text-xs font-bold hover:shadow-lg transition-all duration-150"
                       >
                         Allocate Local Stock
                       </button>
@@ -244,7 +244,7 @@ const JobOperations: React.FC = () => {
                     {job.status === JobStatus.WAITING_FOR_PROCUREMENT && (
                        <button 
                         onClick={(e) => { e.stopPropagation(); if(user) updateJobStatus(job.id, JobStatus.SITE_CHECK_PENDING, user, {}, { reason: 'Procurement completed, inventory now available', outcome: 'procurement_resolved' }); }}
-                        className="border-2 border-[#550065] text-[#550065] px-4 py-2 rounded-lg text-xs font-bold hover:bg-purple-50 transition-all duration-150"
+                        className="border-2 border-[#0a9c82] text-[#0a9c82] px-4 py-2 rounded-xl text-xs font-bold hover:bg-teal-50 transition-all duration-150"
                       >
                         Procurement Resolved
                       </button>
@@ -285,11 +285,11 @@ const JobOperations: React.FC = () => {
       {/* Detail Modal */}
       {selectedJob && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-purple-900/40 backdrop-blur-sm">
-          <div className="bg-white w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
-            <div className="bg-[#550065] p-6 flex justify-between items-center text-white shrink-0">
+          <div className="bg-white w-full max-w-4xl rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] border-2 border-[#0a9c82]">
+            <div className="bg-gradient-to-r from-[#0a9c82] to-[#4ac59d] p-6 flex justify-between items-center text-white shrink-0">
               <div>
                 <h3 className="text-2xl font-bold">{selectedJob.id}</h3>
-                <p className="text-purple-200 text-sm">Detailed Order Lifecycle Tracking</p>
+                <p className="text-teal-100 text-sm">Detailed Order Lifecycle Tracking</p>
               </div>
               <button 
                 onClick={() => setSelectedJobId(null)}
@@ -337,12 +337,12 @@ const JobOperations: React.FC = () => {
                   <div>
                     <h4 className="text-xs font-bold text-gray-400 uppercase mb-3">Customer Information</h4>
                     <div className="bg-gray-50 p-4 rounded-xl border border-gray-100">
-                      <div className="text-lg font-bold text-[#002D72]">{selectedJob.customerName}</div>
+                      <div className="text-lg font-bold text-[#073b4c]">{selectedJob.customerName}</div>
                       <div className="text-gray-600 mt-1">{selectedJob.address}, {selectedJob.postcode}</div>
                       <div className="mt-3 flex gap-4">
                         <div className="text-xs">
                           <span className="text-gray-400 block uppercase">SLA</span>
-                          <span className="font-bold text-purple-700">{selectedJob.sla} Care Level</span>
+                          <span className="font-bold text-[#0a9c82]">{selectedJob.sla} Care Level</span>
                         </div>
                         <div className="text-xs">
                           <span className="text-gray-400 block uppercase">Product</span>
@@ -359,9 +359,9 @@ const JobOperations: React.FC = () => {
                         <div className="text-xs text-gray-400 italic">No audit entries yet</div>
                       ) : (
                         selectedJobLogs.map(log => (
-                          <div key={log.id} className="border-l-2 border-purple-300 pl-3 py-1">
+                          <div key={log.id} className="border-l-2 border-[#0a9c82] pl-3 py-1">
                             <div className="flex justify-between items-start mb-1">
-                              <span className="font-bold text-[#550065] text-xs">{log.action}</span>
+                              <span className="font-bold text-[#0a9c82] text-xs">{log.action}</span>
                               <span className="text-[10px] text-gray-400">{new Date(log.timestamp).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</span>
                             </div>
                             {log.reason && (
@@ -385,7 +385,7 @@ const JobOperations: React.FC = () => {
                     <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 space-y-4">
                       <div className="flex justify-between items-center text-sm">
                         <span className="text-gray-500 font-medium">Assigned Agent:</span>
-                        <span className="font-bold text-[#550065]">{selectedJob.assignedAgentId || 'Unassigned'}</span>
+                        <span className="font-bold text-[#0a9c82]">{selectedJob.assignedAgentId || 'Unassigned'}</span>
                       </div>
                       <div className="flex justify-between items-center text-sm">
                         <span className="text-gray-500 font-medium">ONT Serial:</span>
@@ -427,10 +427,10 @@ const JobOperations: React.FC = () => {
       {/* Site Check Decision Modal */}
       {showSiteCheckModal && (
         <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-white w-full max-w-md rounded-xl shadow-2xl overflow-hidden">
-            <div className="bg-[#550065] p-4 text-white">
+          <div className="bg-white w-full max-w-md rounded-xl shadow-2xl overflow-hidden border-2 border-[#0a9c82]">
+            <div className="bg-gradient-to-r from-[#0a9c82] to-[#4ac59d] p-4 text-white">
               <h3 className="text-lg font-bold">Site Serviceability Check</h3>
-              <p className="text-sm text-purple-200">Select outcome for {showSiteCheckModal}</p>
+              <p className="text-sm text-teal-100">Select outcome for {showSiteCheckModal}</p>
             </div>
             <div className="p-6 space-y-4">
               <div className="space-y-2">
@@ -492,7 +492,7 @@ const JobOperations: React.FC = () => {
               <button
                 onClick={() => handleSiteCheckSubmit(showSiteCheckModal)}
                 disabled={!siteCheckDecision}
-                className="px-4 py-2 bg-[#550065] text-white rounded-lg text-sm font-bold hover:bg-[#3a0045] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-4 py-2 bg-gradient-to-r from-[#0a9c82] to-[#4ac59d] text-white rounded-xl text-sm font-bold hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Confirm Decision
               </button>
@@ -504,10 +504,10 @@ const JobOperations: React.FC = () => {
       {/* Inventory Check Decision Modal */}
       {showInventoryModal && (
         <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-white w-full max-w-md rounded-xl shadow-2xl overflow-hidden">
-            <div className="bg-indigo-600 p-4 text-white">
+          <div className="bg-white w-full max-w-md rounded-xl shadow-2xl overflow-hidden border-2 border-[#0a9c82]">
+            <div className="bg-gradient-to-r from-[#0a9c82] to-[#4ac59d] p-4 text-white">
               <h3 className="text-lg font-bold">Inventory Availability Check</h3>
-              <p className="text-sm text-indigo-200">Check depot stock for {showInventoryModal}</p>
+              <p className="text-sm text-teal-100">Check depot stock for {showInventoryModal}</p>
             </div>
             <div className="p-6 space-y-4">
               <div className="space-y-2">
@@ -575,7 +575,7 @@ const JobOperations: React.FC = () => {
                   }
                 }}
                 disabled={!inventoryDecision}
-                className="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-bold hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-4 py-2 bg-gradient-to-r from-[#0a9c82] to-[#4ac59d] text-white rounded-xl text-sm font-bold hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Confirm Decision
               </button>

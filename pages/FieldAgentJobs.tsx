@@ -108,9 +108,9 @@ const FieldAgentJobs: React.FC = () => {
 
   if (selectedJobId && selectedJob) {
     return (
-      <div className="flex flex-col h-[calc(100vh-140px)] bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 max-w-2xl mx-auto text-gray-800">
+      <div className="flex flex-col h-[calc(100vh-140px)] bg-white rounded-xl shadow-xl overflow-hidden border-2 border-[#0a9c82] max-w-2xl mx-auto text-gray-800">
         {/* Modal Header */}
-        <div className="bg-[#550065] p-5 text-white flex justify-between items-center shrink-0">
+        <div className="bg-gradient-to-r from-[#0a9c82] to-[#4ac59d] p-5 text-white flex justify-between items-center shrink-0">
           <div>
             <div className="text-[10px] font-black opacity-60 uppercase tracking-widest">Field Execution Unit</div>
             <h3 className="text-xl font-bold font-mono">{selectedJob.id}</h3>
@@ -126,7 +126,7 @@ const FieldAgentJobs: React.FC = () => {
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`flex-1 py-4 text-xs font-black uppercase tracking-wider transition-all border-b-2 ${activeTab === tab ? 'border-[#550065] text-[#550065] bg-white' : 'border-transparent text-gray-400 hover:text-gray-600'}`}
+              className={`flex-1 py-4 text-xs font-black uppercase tracking-wider transition-all border-b-2 ${activeTab === tab ? 'border-[#0a9c82] text-[#0a9c82] bg-white' : 'border-transparent text-gray-400 hover:text-gray-600'}`}
             >
               {tab}
             </button>
@@ -137,16 +137,16 @@ const FieldAgentJobs: React.FC = () => {
         <div className="flex-1 overflow-y-auto p-6 space-y-6 pb-24">
           {activeTab === 'details' && (
             <div className="space-y-6 animate-in fade-in duration-300">
-              <div className="bg-purple-50 p-4 rounded-xl border border-purple-100">
+              <div className="bg-teal-50 p-4 rounded-xl border-2 border-[#0a9c82]">
                 <div className="flex justify-between items-start mb-2">
-                  <h4 className="font-bold text-[#550065]">Site Reference</h4>
+                  <h4 className="font-bold text-[#0a9c82]">Site Reference</h4>
                   <StatusBadge status={selectedJob.status} />
                 </div>
                 <p className="text-sm font-bold text-gray-900">{selectedJob.customerName}</p>
                 <p className="text-sm text-gray-600 mb-2">{selectedJob.address}, {selectedJob.postcode}</p>
                 <div className="flex gap-2">
-                   <span className="text-[10px] bg-white px-2 py-0.5 rounded border border-purple-200 font-bold text-purple-600">{selectedJob.serviceType}</span>
-                   <span className="text-[10px] bg-white px-2 py-0.5 rounded border border-purple-200 font-bold text-purple-600">{selectedJob.sla} Care</span>
+                   <span className="text-[10px] bg-white px-2 py-0.5 rounded border-2 border-[#0a9c82] font-bold text-[#0a9c82]">{selectedJob.serviceType}</span>
+                   <span className="text-[10px] bg-white px-2 py-0.5 rounded border-2 border-[#0a9c82] font-bold text-[#0a9c82]">{selectedJob.sla} Care</span>
                 </div>
               </div>
 
@@ -163,14 +163,14 @@ const FieldAgentJobs: React.FC = () => {
             <div className="space-y-6 animate-in slide-in-from-bottom-2 duration-300">
               {selectedJob.status === JobStatus.ENGINEER_ASSIGNED ? (
                 <div className="text-center py-12">
-                   <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                     <svg className="w-8 h-8 text-[#550065]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                   <div className="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                     <svg className="w-8 h-8 text-[#0a9c82]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                    </div>
                    <h5 className="font-bold text-gray-800">Awaiting Site Arrival</h5>
                    <p className="text-xs text-gray-500 mt-1 mb-6">Engagement required to unlock evidence capture.</p>
                    <button 
                      onClick={() => handleStartJob(selectedJob.id)}
-                     className="bg-[#550065] text-white px-8 py-3 rounded-xl font-bold uppercase text-xs tracking-widest shadow-lg shadow-purple-900/20"
+                     className="bg-gradient-to-r from-[#0a9c82] to-[#4ac59d] text-white px-8 py-3 rounded-xl font-bold uppercase text-xs tracking-widest shadow-lg"
                    >
                      Arrived at Site
                    </button>
@@ -182,7 +182,7 @@ const FieldAgentJobs: React.FC = () => {
                     <input 
                       type="text" 
                       placeholder="e.g. BT-99-AABB"
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl font-mono text-sm focus:ring-2 focus:ring-[#550065] outline-none"
+                      className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl font-mono text-sm focus:ring-2 focus:ring-[#0a9c82] focus:border-[#0a9c82] outline-none"
                       value={formData.ontSerial}
                       onChange={e => setFormData({...formData, ontSerial: e.target.value})}
                     />
@@ -195,7 +195,7 @@ const FieldAgentJobs: React.FC = () => {
                         <button 
                           key={r}
                           onClick={() => setFormData({...formData, fibreRoute: r as FibreRouteType})}
-                          className={`flex-1 py-3 rounded-xl text-xs font-bold border transition-all ${formData.fibreRoute === r ? 'bg-[#550065] text-white border-[#550065]' : 'bg-gray-50 text-gray-500 border-gray-200'}`}
+                          className={`flex-1 py-3 rounded-xl text-xs font-bold border-2 transition-all ${formData.fibreRoute === r ? 'bg-[#0a9c82] text-white border-[#0a9c82]' : 'bg-gray-50 text-gray-500 border-gray-200'}`}
                         >
                           {r}
                         </button>
@@ -208,7 +208,7 @@ const FieldAgentJobs: React.FC = () => {
                     <div className="flex gap-3 overflow-x-auto pb-2">
                        <button 
                          onClick={handlePhotoUpload}
-                         className="w-20 h-20 shrink-0 border-2 border-dashed border-gray-200 rounded-xl flex items-center justify-center text-gray-300 hover:border-[#550065] transition-all"
+                         className="w-20 h-20 shrink-0 border-2 border-dashed border-gray-200 rounded-xl flex items-center justify-center text-gray-300 hover:border-[#0a9c82] transition-all"
                        >
                          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4"/></svg>
                        </button>
@@ -229,7 +229,7 @@ const FieldAgentJobs: React.FC = () => {
                 <div className="space-y-3">
                   {jobLogs.map(log => (
                     <div key={log.id} className="flex gap-3 text-xs">
-                      <div className="shrink-0 w-1 bg-purple-200 rounded-full"></div>
+                      <div className="shrink-0 w-1 bg-[#0a9c82] rounded-full"></div>
                       <div>
                         <div className="font-bold text-gray-800">{log.action}</div>
                         <div className="text-gray-400 font-medium">Recorded by {log.actor} • {new Date(log.timestamp).toLocaleTimeString()}</div>
@@ -259,7 +259,7 @@ const FieldAgentJobs: React.FC = () => {
           ) : selectedJob.status === JobStatus.ENGINEER_ASSIGNED ? (
             <button 
               onClick={() => handleStartJob(selectedJob.id)}
-              className="flex-1 bg-[#550065] text-white py-4 rounded-xl font-black text-xs uppercase tracking-widest shadow-lg active:scale-95"
+              className="flex-1 bg-gradient-to-r from-[#0a9c82] to-[#4ac59d] text-white py-4 rounded-xl font-black text-xs uppercase tracking-widest shadow-lg active:scale-95"
             >
               Start On-Site Task
             </button>
@@ -379,12 +379,12 @@ const FieldAgentJobs: React.FC = () => {
     <div className="space-y-6 max-w-2xl mx-auto text-gray-800">
       <div className="flex justify-between items-end px-2">
         <div>
-          <h2 className="text-3xl font-black text-[#550065]">Daily Route</h2>
+          <h2 className="text-3xl font-black text-[#0a9c82]">Daily Route</h2>
           <p className="text-gray-500 text-sm font-medium">Agent: <span className="text-gray-900 font-bold">{user?.username}</span> • {user?.region}</p>
         </div>
         <div className="bg-white p-2 rounded-xl shadow-sm border border-gray-100">
            <div className="text-[10px] font-black text-gray-400 uppercase tracking-tighter text-center">Active Jobs</div>
-           <div className="text-xl font-black text-center text-[#550065] leading-none">{myJobs.length}</div>
+           <div className="text-xl font-black text-center text-[#0a9c82] leading-none">{myJobs.length}</div>
         </div>
       </div>
 
@@ -403,10 +403,10 @@ const FieldAgentJobs: React.FC = () => {
                 customerAvailable: job.customerAvailable ?? true
               });
             }}
-            className="bg-white rounded-2xl p-5 border border-gray-100 shadow-md hover:shadow-xl hover:border-[#550065]/20 transition-all cursor-pointer group active:scale-[0.98]"
+            className="bg-white rounded-xl p-5 border-2 border-[#0a9c82] shadow-md hover:shadow-xl hover:border-[#4ac59d] transition-all cursor-pointer group active:scale-[0.98]"
           >
             <div className="flex justify-between items-start mb-4">
-              <div className="bg-purple-50 p-3 rounded-xl group-hover:bg-[#550065] group-hover:text-white transition-colors">
+              <div className="bg-teal-50 p-3 rounded-xl group-hover:bg-[#0a9c82] group-hover:text-white transition-colors">
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
               </div>
               <StatusBadge status={job.status} />
@@ -427,7 +427,7 @@ const FieldAgentJobs: React.FC = () => {
                     {job.postcode}
                  </div>
               </div>
-              <div className="flex items-center gap-1 text-[#550065]">
+              <div className="flex items-center gap-1 text-[#0a9c82]">
                  <span className="text-xs font-black uppercase">Open Sheet</span>
                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"/></svg>
               </div>
