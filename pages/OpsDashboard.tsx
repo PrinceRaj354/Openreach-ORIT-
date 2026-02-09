@@ -40,16 +40,16 @@ const OpsDashboard: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header */}
-      <div className="border-b-2 border-[#0a9c82] pb-4">
-        <h2 className="text-2xl font-bold text-[#073b4c]">Regulatory & Operations Performance Dashboard</h2>
-        <p className="text-sm text-gray-500 mt-1">Openreach KPI Analytics • Reporting Period: FY 2025-2026</p>
+      <div className="bg-white rounded-2xl p-6 shadow-md border-2 border-[#0a9c82]/20">
+        <h2 className="text-3xl font-bold text-[#073b4c]">Regulatory & Operations Performance Dashboard</h2>
+        <p className="text-sm text-gray-500 mt-2">Openreach KPI Analytics • Reporting Period: FY 2025-2026</p>
       </div>
 
       {/* PRIMARY KPI CARDS */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
-        <div className={`bg-white p-5 rounded-xl shadow-sm border-2 ${getStatusBg(99.5, { green: 99, amber: 97 })}`}>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
+        <div className={`bg-white p-6 rounded-2xl shadow-md hover:shadow-xl border-2 transition-all duration-300 hover:-translate-y-1 ${getStatusBg(99.5, { green: 99, amber: 97 })}`}>
           <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Appointment Availability</div>
           <div className={`text-3xl font-bold ${getStatusColor(99.5, { green: 99, amber: 97 })}`}>99.5%</div>
           <div className="text-xs text-gray-600 mt-1">Within 10 working days</div>
@@ -59,7 +59,7 @@ const OpsDashboard: React.FC = () => {
           </div>
         </div>
 
-        <div className={`bg-white p-5 rounded-xl shadow-sm border-2 ${getStatusBg(97.5, { green: 96, amber: 94 })}`}>
+        <div className={`bg-white p-6 rounded-2xl shadow-md hover:shadow-xl border-2 transition-all duration-300 hover:-translate-y-1 ${getStatusBg(97.5, { green: 96, amber: 94 })}`}>
           <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">On-Time Installations</div>
           <div className={`text-3xl font-bold ${getStatusColor(97.5, { green: 96, amber: 94 })}`}>97.5%</div>
           <div className="text-xs text-gray-600 mt-1">Completed as agreed</div>
@@ -69,7 +69,7 @@ const OpsDashboard: React.FC = () => {
           </div>
         </div>
 
-        <div className={`bg-white p-5 rounded-xl shadow-sm border-2 ${getStatusBg(89.5, { green: 88, amber: 85 })}`}>
+        <div className={`bg-white p-6 rounded-2xl shadow-md hover:shadow-xl border-2 transition-all duration-300 hover:-translate-y-1 ${getStatusBg(89.5, { green: 88, amber: 85 })}`}>
           <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Faults Fixed (2 Days)</div>
           <div className={`text-3xl font-bold ${getStatusColor(89.5, { green: 88, amber: 85 })}`}>89.5%</div>
           <div className="text-xs text-gray-600 mt-1">Within SLA target</div>
@@ -79,7 +79,7 @@ const OpsDashboard: React.FC = () => {
           </div>
         </div>
 
-        <div className={`bg-white p-5 rounded-xl shadow-sm border-2 ${getStatusBg(4.2, { green: 5, amber: 7 })}`}>
+        <div className={`bg-white p-6 rounded-2xl shadow-md hover:shadow-xl border-2 transition-all duration-300 hover:-translate-y-1 ${getStatusBg(4.2, { green: 5, amber: 7 })}`}>
           <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">First Engineer Slot</div>
           <div className={`text-3xl font-bold ${getStatusColor(4.2, { green: 5, amber: 7 })}`}>4.2</div>
           <div className="text-xs text-gray-600 mt-1">Working days (Target: 10)</div>
@@ -89,7 +89,7 @@ const OpsDashboard: React.FC = () => {
           </div>
         </div>
 
-        <div className={`bg-white p-5 rounded-xl shadow-sm border-2 ${getStatusBg(10.5, { green: 12, amber: 15 })}`}>
+        <div className={`bg-white p-6 rounded-2xl shadow-md hover:shadow-xl border-2 transition-all duration-300 hover:-translate-y-1 ${getStatusBg(10.5, { green: 12, amber: 15 })}`}>
           <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Avg Install Time</div>
           <div className={`text-3xl font-bold ${getStatusColor(10.5, { green: 12, amber: 15 })}`}>10.5</div>
           <div className="text-xs text-gray-600 mt-1">Working days (Engineer)</div>
@@ -99,7 +99,7 @@ const OpsDashboard: React.FC = () => {
           </div>
         </div>
 
-        <div className={`bg-white p-5 rounded-xl shadow-sm border-2 ${getStatusBg(98.2, { green: 97, amber: 95 })}`}>
+        <div className={`bg-white p-6 rounded-2xl shadow-md hover:shadow-xl border-2 transition-all duration-300 hover:-translate-y-1 ${getStatusBg(98.2, { green: 97, amber: 95 })}`}>
           <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Missed Appointments</div>
           <div className={`text-3xl font-bold ${getStatusColor(98.2, { green: 97, amber: 95 })}`}>1.8%</div>
           <div className="text-xs text-gray-600 mt-1">Customer/Engineer</div>
@@ -111,9 +111,9 @@ const OpsDashboard: React.FC = () => {
       </div>
 
       {/* INSTALLATION PERFORMANCE */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white p-6 rounded-xl shadow-sm border-2 border-[#0a9c82]">
-          <h3 className="text-sm font-bold text-[#073b4c] uppercase tracking-wide mb-4">Installation Performance Trend</h3>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl border-2 border-[#0a9c82]/20 transition-all duration-300">
+          <h3 className="text-lg font-bold text-[#073b4c] uppercase tracking-wide mb-6">Installation Performance Trend</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={installPerformanceData}>
@@ -129,8 +129,8 @@ const OpsDashboard: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-xl shadow-sm border-2 border-[#0a9c82]">
-          <h3 className="text-sm font-bold text-[#073b4c] uppercase tracking-wide mb-4">Fault Resolution Performance</h3>
+        <div className="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl border-2 border-[#0a9c82]/20 transition-all duration-300">
+          <h3 className="text-lg font-bold text-[#073b4c] uppercase tracking-wide mb-6">Fault Resolution Performance</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={faultResolutionData}>
@@ -148,8 +148,8 @@ const OpsDashboard: React.FC = () => {
       </div>
 
       {/* REGIONAL PERFORMANCE */}
-      <div className="bg-white p-6 rounded-xl shadow-sm border-2 border-[#0a9c82]">
-        <h3 className="text-sm font-bold text-[#073b4c] uppercase tracking-wide mb-4">Regional Performance Comparison</h3>
+      <div className="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl border-2 border-[#0a9c82]/20 transition-all duration-300">
+        <h3 className="text-lg font-bold text-[#073b4c] uppercase tracking-wide mb-6">Regional Performance Comparison</h3>
         <div className="h-80">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={regionalPerformance}>
@@ -167,9 +167,9 @@ const OpsDashboard: React.FC = () => {
       </div>
 
       {/* ORDER DELAY & NETWORK OPERATIONS */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white p-6 rounded-xl shadow-sm border-2 border-[#0a9c82]">
-          <h3 className="text-sm font-bold text-[#073b4c] uppercase tracking-wide mb-4">Order Delay Analytics</h3>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl border-2 border-[#0a9c82]/20 transition-all duration-300">
+          <h3 className="text-lg font-bold text-[#073b4c] uppercase tracking-wide mb-6">Order Delay Analytics</h3>
           <div className="space-y-4">
             <div className="flex justify-between items-center pb-3 border-b border-gray-100">
               <span className="text-sm text-gray-600">Orders delayed &gt;30 days</span>
@@ -194,8 +194,8 @@ const OpsDashboard: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-xl shadow-sm border-2 border-[#0a9c82]">
-          <h3 className="text-sm font-bold text-[#073b4c] uppercase tracking-wide mb-4">Network Operations Summary</h3>
+        <div className="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl border-2 border-[#0a9c82]/20 transition-all duration-300">
+          <h3 className="text-lg font-bold text-[#073b4c] uppercase tracking-wide mb-6">Network Operations Summary</h3>
           <div className="space-y-4">
             <div className="flex justify-between items-center pb-3 border-b border-gray-100">
               <span className="text-sm text-gray-600">Active Service Providers</span>

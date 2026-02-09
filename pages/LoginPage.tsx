@@ -5,6 +5,8 @@ import { UserRole } from '../types';
 import Navbar from '../components/Navbar';
 import LandingHero from '../components/LandingHero';
 import Testimonials from '../components/Testimonials';
+import FullFibreSection from '../components/FullFibreSection';
+import ServiceProvidersSection from '../components/ServiceProvidersSection';
 
 const LoginPage: React.FC = () => {
   const { login } = useApp();
@@ -29,6 +31,8 @@ const LoginPage: React.FC = () => {
       <Navbar onLoginClick={() => setShowLoginModal(true)} />
       <LandingHero />
       <Testimonials />
+      <FullFibreSection />
+      <ServiceProvidersSection />
 
       {/* Login Modal */}
       {showLoginModal && (

@@ -137,26 +137,26 @@ const JobOperations: React.FC = () => {
     <div className="space-y-8">
       {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg border-2 border-[#0a9c82] transition-all duration-200 hover:-translate-y-1">
+        <div className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl border-2 border-[#0a9c82]/20 transition-all duration-300 hover:-translate-y-1">
           <div className="text-gray-500 text-xs font-bold uppercase tracking-wider mb-2">New Order Intakes</div>
           <div className="text-4xl font-black text-[#0a9c82]">{getCount(JobStatus.ORDER_RECEIVED)}</div>
         </div>
-        <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg border-2 border-[#0a9c82] transition-all duration-200 hover:-translate-y-1">
+        <div className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl border-2 border-[#0a9c82]/20 transition-all duration-300 hover:-translate-y-1">
           <div className="text-gray-500 text-xs font-bold uppercase tracking-wider mb-2">Pending Checks</div>
           <div className="text-4xl font-black text-[#4ac59d]">{getCount(JobStatus.INVENTORY_CHECK_PENDING) + getCount(JobStatus.SITE_CHECK_PENDING) + getCount(JobStatus.NODE_CAPACITY_PENDING)}</div>
         </div>
-        <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg border-2 border-[#0a9c82] transition-all duration-200 hover:-translate-y-1">
+        <div className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl border-2 border-[#0a9c82]/20 transition-all duration-300 hover:-translate-y-1">
           <div className="text-gray-500 text-xs font-bold uppercase tracking-wider mb-2">Rework Orders</div>
           <div className="text-4xl font-black text-orange-600">{reworkCount}</div>
         </div>
-        <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg border-2 border-[#0a9c82] transition-all duration-200 hover:-translate-y-1">
+        <div className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl border-2 border-[#0a9c82]/20 transition-all duration-300 hover:-translate-y-1">
           <div className="text-gray-500 text-xs font-bold uppercase tracking-wider mb-2">Complete / Ready</div>
           <div className="text-4xl font-black text-green-600">{getCount(JobStatus.JOB_COMPLETED) + getCount(JobStatus.BACKEND_NOTIFIED)}</div>
         </div>
       </div>
 
       {/* Actionable Workflow Table */}
-      <div className="bg-white rounded-xl shadow-md border-2 border-[#0a9c82] overflow-hidden">
+      <div className="bg-white rounded-2xl shadow-md hover:shadow-xl border-2 border-[#0a9c82]/20 overflow-hidden transition-all duration-300">
         <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-gradient-to-r from-gray-50 to-white">
           <h2 className="text-lg font-bold text-gray-800">Operational Queue</h2>
           <div className="flex gap-2 text-xs text-gray-500 bg-white px-3 py-1.5 rounded-lg border border-gray-200 shadow-sm">
