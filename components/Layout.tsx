@@ -4,6 +4,16 @@ import { useApp } from '../AppContext';
 import { UserRole } from '../types';
 import { DashboardIcon, JobsIcon, MapIcon, InventoryIcon, NotificationIcon, SupportIcon } from './Icons';
 
+interface OrderNotification {
+  id: string;
+  orderId: string;
+  title: string;
+  message: string;
+  timestamp: string;
+  isRead: boolean;
+  target: 'OPS' | 'AGENT';
+}
+
 interface LayoutProps {
   children: React.ReactNode;
 }
@@ -15,6 +25,30 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hasVibrated, setHasVibrated] = useState(false);
+  const [orderNotifications, setOrderNotifications] = useState<OrderNotification[]>([]);
+
+  React.useEffect(() => {
+    const handleOrderNotification = (event: any) => {
+      const { orderId, title, message, target } = event.detail;
+      const userTarget = user?.role === UserRole.ORIT_OPS ? 'OPS' : 'AGENT';
+      
+      if (target === userTarget) {
+        const newNotif: OrderNotification = {
+          id: `ON-${Date.now()}`,
+          orderId,
+          title,
+          message,
+          timestamp: new Date().toISOString(),
+          isRead: false,
+          target
+        };
+        setOrderNotifications(prev => [newNotif, ...prev]);
+      }
+    };
+
+    window.addEventListener('orderNotification', handleOrderNotification);
+    return () => window.removeEventListener('orderNotification', handleOrderNotification);
+  }, [user]);
 
   if (!user) return <>{children}</>;
 
@@ -26,7 +60,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const navItems = [
     ...(user.role === UserRole.ORIT_OPS ? [
       { to: '/dashboard', label: 'Dashboard', icon: <DashboardIcon /> },
-      { to: '/jobs', label: 'Orders', icon: <JobsIcon /> },
+      { to: '/orders', label: 'Orders', icon: <JobsIcon /> },
       { to: '/inventory', label: 'Inventory', icon: <InventoryIcon /> },
     ] : [
       { to: '/field-jobs', label: 'My Jobs', icon: <JobsIcon /> },
@@ -40,8 +74,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   }, [notifications, user.role]);
 
   const unreadCount = useMemo(() => {
-    return roleNotifications.filter(n => !n.isRead).length;
-  }, [roleNotifications]);
+    return roleNotifications.filter(n => !n.isRead).length + orderNotifications.filter(n => !n.isRead).length;
+  }, [roleNotifications, orderNotifications]);
 
   React.useEffect(() => {
     if (unreadCount > 0 && !hasVibrated) {
@@ -115,28 +149,49 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                         <span className="text-[10px] text-gray-500 uppercase font-bold">{unreadCount} Unread</span>
                       </div>
                       <div className="max-h-[400px] overflow-y-auto">
-                        {roleNotifications.length === 0 ? (
+                        {orderNotifications.length === 0 && roleNotifications.length === 0 ? (
                           <div className="p-10 text-center text-gray-400 text-xs italic">No alerts for your role.</div>
                         ) : (
-                          roleNotifications.map(notif => (
-                            <div 
-                              key={notif.id}
-                              className={`p-4 border-b border-gray-100 hover:bg-teal-50/50 cursor-pointer transition-all duration-150 ${!notif.isRead ? 'bg-teal-50/50 border-l-4 border-l-[#0a9c82]' : ''}`}
-                              onClick={() => {
-                                markNotificationRead(notif.id);
-                                setShowNotifications(false);
-                                const targetPath = user.role === UserRole.ORIT_OPS ? '/jobs' : '/field-jobs';
-                                navigate(targetPath, { state: { highlightJobId: notif.jobId } });
-                              }}
-                            >
-                              <div className="flex justify-between items-start mb-1">
-                                <span className="text-xs font-bold text-[#0a9c82]">{notif.title}</span>
-                                <span className="text-[10px] text-gray-400">{new Date(notif.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                          <>
+                            {orderNotifications.map(notif => (
+                              <div 
+                                key={notif.id}
+                                className={`p-4 border-b border-gray-100 hover:bg-teal-50/50 cursor-pointer transition-all duration-150 ${!notif.isRead ? 'bg-teal-50/50 border-l-4 border-l-[#0a9c82]' : ''}`}
+                                onClick={() => {
+                                  setOrderNotifications(prev => prev.map(n => n.id === notif.id ? {...n, isRead: true} : n));
+                                  setShowNotifications(false);
+                                  const targetPath = user.role === UserRole.ORIT_OPS ? `/orders/${notif.orderId}` : `/agent/orders/${notif.orderId}`;
+                                  navigate(targetPath);
+                                }}
+                              >
+                                <div className="flex justify-between items-start mb-1">
+                                  <span className="text-xs font-bold text-[#0a9c82]">{notif.title}</span>
+                                  <span className="text-[10px] text-gray-400">{new Date(notif.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                                </div>
+                                <p className="text-xs text-gray-600 line-clamp-2">{notif.message}</p>
+                                <div className="mt-2 text-[10px] font-mono font-bold text-gray-400">Order: {notif.orderId}</div>
                               </div>
-                              <p className="text-xs text-gray-600 line-clamp-2">{notif.message}</p>
-                              <div className="mt-2 text-[10px] font-mono font-bold text-gray-400">Order Ref: {notif.jobId}</div>
-                            </div>
-                          ))
+                            ))}
+                            {roleNotifications.map(notif => (
+                              <div 
+                                key={notif.id}
+                                className={`p-4 border-b border-gray-100 hover:bg-teal-50/50 cursor-pointer transition-all duration-150 ${!notif.isRead ? 'bg-teal-50/50 border-l-4 border-l-[#0a9c82]' : ''}`}
+                                onClick={() => {
+                                  markNotificationRead(notif.id);
+                                  setShowNotifications(false);
+                                  const targetPath = user.role === UserRole.ORIT_OPS ? '/orders' : '/field-jobs';
+                                  navigate(targetPath, { state: { highlightJobId: notif.jobId } });
+                                }}
+                              >
+                                <div className="flex justify-between items-start mb-1">
+                                  <span className="text-xs font-bold text-[#0a9c82]">{notif.title}</span>
+                                  <span className="text-[10px] text-gray-400">{new Date(notif.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                                </div>
+                                <p className="text-xs text-gray-600 line-clamp-2">{notif.message}</p>
+                                <div className="mt-2 text-[10px] font-mono font-bold text-gray-400">Order Ref: {notif.jobId}</div>
+                              </div>
+                            ))}
+                          </>
                         )}
                       </div>
                     </div>

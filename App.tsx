@@ -11,6 +11,9 @@ import InventoryPage from './pages/InventoryPage';
 
 import JobOperations from './pages/JobOperations';
 import SupportPage from './pages/SupportPage';
+import OrderQueue from './pages/OrderQueue';
+import OrderDetails from './pages/OrderDetails';
+import FieldAgentOrderView from './pages/FieldAgentOrderView';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user } = useApp();
@@ -63,6 +66,24 @@ const AppContent: React.FC = () => {
         <Route path="/support" element={
           <ProtectedRoute>
             <SupportPage />
+          </ProtectedRoute>
+        } />
+
+        <Route path="/orders" element={
+          <ProtectedRoute>
+            <OrderQueue />
+          </ProtectedRoute>
+        } />
+
+        <Route path="/orders/:orderId" element={
+          <ProtectedRoute>
+            <OrderDetails />
+          </ProtectedRoute>
+        } />
+
+        <Route path="/agent/orders/:orderId" element={
+          <ProtectedRoute>
+            <FieldAgentOrderView />
           </ProtectedRoute>
         } />
 
