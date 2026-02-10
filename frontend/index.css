@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --openreach-teal: #0a9c82;
+  --openreach-teal-dark: #088a72;
+  --openreach-dark: #073b4c;
+  --openreach-bg: #ffffff;
+  --openreach-gradient: linear-gradient(-225deg, #0a9c82, #4ac59d);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', 'Openreach', Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--openreach-dark);
+  background-color: #f3f4f6;
+}
+
+/* Primary Button Style */
+.btn-primary {
+  background: var(--openreach-gradient);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  padding: 11px 20px;
+  min-width: 175px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(10, 156, 130, 0.3);
+}
+
+/* Link Style */
+a {
+  color: var(--openreach-teal);
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Card Style */
+.card-openreach {
+  background: white;
+  border: 2px solid var(--openreach-teal);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Input Style */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+select,
+textarea {
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--openreach-teal);
+  box-shadow: 0 0 0 3px rgba(10, 156, 130, 0.1);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--openreach-teal);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--openreach-teal-dark);
+}

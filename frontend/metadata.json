@@ -1,0 +1,8 @@
+
+{
+  "name": "BT Openreach ORIT Workflow Simulation",
+  "description": "An enterprise-grade UI simulating the Openreach ORIT operational workflow, including site feasibility, inventory validation, and field execution.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
